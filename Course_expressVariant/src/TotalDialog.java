@@ -3,8 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 
 
-class TotalDialog extends JDialog
-        implements ActionListener {
+class TotalDialog extends JDialog implements ActionListener {
     //Диалог для итогового запроса
     public TotalDialog(JFrame parent, String name, java.util.List<TotalRecord> list) { //конструктор
         // вызов конструктора базового класса
@@ -23,8 +22,7 @@ class TotalDialog extends JDialog
         //Создаем панель прокрутки и включаем в ее состав  таблицу
         JScrollPane scrtable = new JScrollPane(jtable);
         //Устаналиваем размеры прокручиваемой области
-        jtable.setPreferredScrollableViewportSize(
-                new Dimension(150, 150));
+        jtable.setPreferredScrollableViewportSize(new Dimension(150, 150));
         add(scrtable, BorderLayout.CENTER);
         //-----------------------------------------------------------------
         MainFrame.MSG.setText("   Итоговый запрос на выборку");

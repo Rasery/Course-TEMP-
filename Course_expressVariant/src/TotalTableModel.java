@@ -28,9 +28,9 @@ public class TotalTableModel extends AbstractTableModel {
     public Object getValueAt(int r, int c) {
         switch (c) {
             case 0:
-                return records.get(r).str;
+                return records.get(r).getStr();
             case 1:
-                return records.get(r).num;
+                return records.get(r).getNum();
             default:
                 return "";
         }
