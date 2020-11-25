@@ -10,28 +10,19 @@ public class BuilderGroup {
 
     // конструкторы
     public BuilderGroup() {
-        name = "";  //без названия
-        builders = new ArrayList<Builder>(); //создается пустой список
+        this.name = "";  //без названия
+        this.builders = new ArrayList<Builder>(); //создается пустой список
     }
 
     public BuilderGroup(String name) {
         this.name = name; //задается название группы
-        builders = new ArrayList<Builder>(); //создается пустой список
+        this.builders = new ArrayList<Builder>(); //создается пустой список
     }
 
-    public BuilderGroup(String name, List list) {
+    public BuilderGroup(String name, List<Builder> list) {
         this.name = name; //задается название группы
-        builders = new ArrayList<Builder>(list); //создается на основе
+        this.builders = new ArrayList<>(list); //создается на основе
         // существующего списка
-    }
-
-    //метод-сеттеры для private-полей
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setBuilders(List<Builder> builders) {
-        this.builders = builders;
     }
 
     //методы-геттеры для private-полей
@@ -39,8 +30,17 @@ public class BuilderGroup {
         return name;
     }
 
+    //метод-сеттеры для private-полей
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<Builder> getBuilders() {
         return builders;
+    }
+
+    public void setBuilders(List<Builder> builders) {
+        this.builders = builders;
     }
 
     //Переопределяем метод toString класса Object
@@ -57,19 +57,18 @@ public class BuilderGroup {
         // результат с таким же ключом)
         if (getBuilder(build) != null)
             return false; //дополнительная программная проверка уникальности ключа
-        if (builders.add(build)) return true;
-        else return false;
+        return this.builders.add(build);
+//        return this.builders.;
     }
 
     //одиночное удаление (по образцу)
     public boolean DelBuilder(Builder build) {
         //Удалить результат c заданным ключом из группы
-        if (builders.remove(build)) return true;
-        else return false;
+        return builders.removeIf(el -> (el.getBuilderId() == build.getBuilderId() && el.getObjectName().toLowerCase().equals(build.getObjectName().toLowerCase())));
     }
 
     //Групповое удаление (по условию)
-    public boolean DelInpReadiness(String inpReadiness) { //IN DEV
+    public boolean DelInpReadiness(String inpReadiness) {
         //удалить результаты, в которых число голов выше среднего
         return builders.removeAll(LessInpReadiness(inpReadiness).builders);
     }
@@ -141,20 +140,20 @@ public class BuilderGroup {
         if (n == 0) return null;
         //Дублируем базовую таблицу (список), т.к. из базовой таблицы
         // записи удалять нельзя
-        List<Builder> resultsTemp = new ArrayList<Builder>(); //создаем дубль
-        resultsTemp.addAll(builders); //копируем ссылки на записи в список-дубль
+        //создаем дубль
+        List<Builder> resultsTemp = new ArrayList<>(builders); //копируем ссылки на записи в список-дубль
         Set<String> commandsS = new TreeSet();
         for (Builder build : builders)
             commandsS.add(build.getObjectName()); //только разные названия команд
-        List<String> commandsL = new ArrayList(commandsS); //для
+        List<String> commandsL = new ArrayList<>(commandsS); //для
         // индексирования
         int m = commandsL.size();
         String com;
         int sum;
         int temp = 0;
-        List<TotalRecord> totRecList = new ArrayList<TotalRecord>();
-        for (int i = 0; i < m; i++) {
-            com = commandsL.get(i);
+        List<TotalRecord> totRecList = new ArrayList<>();
+        for (String s : commandsL) {
+            com = s;
             sum = 0;
          /* Получаем итератор для списка-дубля, т.к. корректно
              удалять требуемые элементы из списка можно только
@@ -169,10 +168,40 @@ public class BuilderGroup {
                     iter.remove(); //удаляем запись  из временного набора
                 }
             }
-            totRecList.add(new TotalRecord(com, sum));
+            var tempTemp = new TotalRecord(com, sum);
+//            totRecList.add(new TotalRecord(com, sum));
+            totRecList.add(tempTemp);
         }
         //System.out.println("Число повторений цикла:" + temp);
         return totRecList;
+    }
+
+    public List<String> result1(){
+        var result = new ArrayList<String>();
+
+        var builders = new ArrayList<Integer>();
+        for (var builder : getBuilders()) {
+            boolean flag = false;
+            for (var el : builders) {
+                if (builder.getBuilderId() == el) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) builders.add(builder.getBuilderId());
+        }
+
+        for (var el : builders) {
+            var max = Integer.MIN_VALUE;
+            for (var builder : getBuilders()) {
+                if (el == builder.getBuilderId()) {
+                    if (builder.getReadiness() > max) max = builder.getReadiness();
+                }
+            }
+            result.add(String.format("Builder: %s\t\tMax: %d", el, max));
+        }
+
+        return result;
     }
 
     public BuilderGroup Sort(Comparator comp) { //coртировка студентов

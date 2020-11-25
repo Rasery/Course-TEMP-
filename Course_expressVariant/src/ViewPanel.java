@@ -39,20 +39,37 @@ public class ViewPanel extends JPanel implements ActionListener {
     }
 
     private void showTotal1() {
-        TotalDialog td = new TotalDialog(MainFrame.frame, "Суммарное число голов для каждой команды:",
-                Global.table.TotalSumCommandGoals_1());
-        td.setVisible(true);
-    }
+        JScrollPane scrollPane = new JScrollPane();
+        Box vBox = Box.createVerticalBox();
+        for(var el : Global.table.result1()){
+            vBox.add(new JLabel(el));
+            System.out.println(el);
+        }
+//        BorderLayout borderLayout = new BorderLayout();
+//        borderLayout.addLayoutComponent(scrollPane, null);
+//        scrollPane.setLayout(new ScrollPaneLayout());
 
-    ;
+//        TotalDialog td = new TotalDialog(MainFrame.frame, "Суммарное число голов для каждой команды:", Global.table.TotalSumCommandGoals_1());
+//        TotalDialog td = new TotalDialog(MainFrame.frame, "Суммарное число голов для каждой команды:", Global.table.TotalSumCommandGoals_1());
+        JDialog dialog = new JDialog(MainFrame.frame, "Result one", true);
+        dialog.getContentPane().setLayout(new GridLayout());
+        dialog.getContentPane().add(scrollPane);
+
+        dialog.setSize(200, 150);
+
+        JButton ok = new JButton("OK");
+        ok.addActionListener(e -> {
+            dialog.setVisible(false);
+        });
+        dialog.getContentPane().add(ok);
+        dialog.setVisible(true);
+    }
 
     private void showTotal2() {
         MainFrame.MSG.setText("   Итоговый запрос на выборку");
         JOptionPane.showMessageDialog(MainFrame.frame,
                 String.format("Count of objects: %5d", Global.table.ObjectsNumber()));
     }
-
-    ;
 
     private void showFilter() {
         String filter = tf.getText();
@@ -71,14 +88,10 @@ public class ViewPanel extends JPanel implements ActionListener {
         Global.updateJTable(Global.table.Sort(new CompIdAscReadinessDesc()).getBuilders());
     }
 
-    ;
-
     private void showAll() {
         MainFrame.MSG.setText("   Запрос на выборку: выдать все записи таблицы без сортировки");
         Global.updateJTable(Global.table.getBuilders());
     }
-
-    ;
 
     public void actionPerformed(ActionEvent e) {
         if ("Total1".equals(e.getActionCommand())) showTotal1();

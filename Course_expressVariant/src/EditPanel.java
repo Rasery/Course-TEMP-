@@ -1,6 +1,7 @@
-import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;//важно
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class EditPanel extends JPanel {
@@ -64,12 +65,13 @@ public class EditPanel extends JPanel {
     }
 
     private void insert() {
-        int n1, n4;
-        String str1, str2, str3, str4;
-        str1 = tf1.getText();
-        str2 = tf2.getText();
-        str3 = tf3.getText();
-        str4 = tf4.getText();
+        int n1;
+        int n4;
+//        String str1; String str2, String str3, String str4;
+        var str1 = tf1.getText();
+        var str2 = tf2.getText();
+        var str3 = tf3.getText();
+        var str4 = tf4.getText();
         if (str1.equals("") || str2.equals("") || str3.equals("") || str4.equals("")) {
             MainFrame.MSG.setText("Задайте значения полей");
             return;
@@ -108,16 +110,13 @@ public class EditPanel extends JPanel {
         try {
             n1 = Integer.parseInt(str1);
             n4 = Integer.parseInt(str4);
-        }
-        catch (NumberFormatException e) {// обработчик исключения для try
+        } catch (NumberFormatException e) {// обработчик исключения для try
             MainFrame.MSG.setText("   Задайте правильно число голов");
             return;
         }
-        MainFrame.MSG.setText(
-                "   Запрос на обновление записи в таблице");
+        MainFrame.MSG.setText("   Запрос на обновление записи в таблице");
         if (!Global.table.UpdBuilderReadiness(new Builder(n1, str2, str3, n4)))
-            MainFrame.MSG.setText(
-                    "   Запись не обновлена, возможно записи с таким ключом нет");
+            MainFrame.MSG.setText("   Запись не обновлена, возможно записи с таким ключом нет");
         Global.updateJTable(Global.table.getBuilders());
         tf1.setText("");
         tf2.setText("");
@@ -127,25 +126,24 @@ public class EditPanel extends JPanel {
 
     private void delete() {
         int n1, n4;
-        String str1, str2;
-        str1 = tf1.getText();
-        str2 = tf2.getText();
+//        String str1, str2;
+        var str1 = tf1.getText();
+        var str2 = tf2.getText();
         if (str1.equals("") || str2.equals("")) {
             MainFrame.MSG.setText("Задайте значения полей ключа");
             return;
         }
         try {
             n1 = Integer.parseInt(str1);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             MainFrame.MSG.setText("   Задайте правильно число голов");
             return;
         }
-        MainFrame.MSG.setText(
-                "   Запрос на удаление записи по ключу");
+        MainFrame.MSG.setText("   Запрос на удаление записи по ключу");
+
         if (!Global.table.DelBuilder(new Builder(n1, str2, "", 0)))
-            MainFrame.MSG.setText(
-                    "   Запись не удалена, возможно записи с таким ключом нет");
+            MainFrame.MSG.setText("   Запись не удалена, возможно записи с таким ключом нет");
+
         Global.updateJTable(Global.table.getBuilders());
         tf1.setText("");
         tf2.setText("");

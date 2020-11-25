@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.List;
 
 public class Global {
     //Содержит глобальные (статические) переменные и методы программы,
