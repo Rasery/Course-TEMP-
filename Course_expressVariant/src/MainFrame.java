@@ -44,7 +44,7 @@ public class MainFrame implements ActionListener {
         myC.setLayout(new BorderLayout(5, 5));
 
         MenuIS s = new MenuIS();
-        frame.setJMenuBar(s.mb1);
+        frame.setJMenuBar(s.menuBar);
 
         s.newFile.addActionListener(this);
         s.openFile.addActionListener(this);
