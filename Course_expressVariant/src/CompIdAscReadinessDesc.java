@@ -6,8 +6,6 @@ public class CompIdAscReadinessDesc implements Comparator {
         Builder build2 = (Builder) ob2;
         if (build1.getBuilderId() < build2.getBuilderId()) return -1;
         else if (build1.getBuilderId() > build2.getBuilderId()) return 1;
-        else if (build1.getReadiness() < build2.getReadiness()) return 1;
-        else if (build1.getReadiness() == build2.getReadiness()) return 0;
-        else return -1;
+        else return Integer.compare(build2.getReadiness(), build1.getReadiness());
     }
 }

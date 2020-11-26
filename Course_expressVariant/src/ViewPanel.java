@@ -39,29 +39,24 @@ public class ViewPanel extends JPanel implements ActionListener {
     }
 
     private void showTotal1() {
-        JScrollPane scrollPane = new JScrollPane();
         Box vBox = Box.createVerticalBox();
-        for(var el : Global.table.result1()){
+        for(var el : Global.table.MaxReadinessForEveryBuilder()){
             vBox.add(new JLabel(el));
-            System.out.println(el);
         }
-//        BorderLayout borderLayout = new BorderLayout();
-//        borderLayout.addLayoutComponent(scrollPane, null);
-//        scrollPane.setLayout(new ScrollPaneLayout());
-
-//        TotalDialog td = new TotalDialog(MainFrame.frame, "Суммарное число голов для каждой команды:", Global.table.TotalSumCommandGoals_1());
-//        TotalDialog td = new TotalDialog(MainFrame.frame, "Суммарное число голов для каждой команды:", Global.table.TotalSumCommandGoals_1());
         JDialog dialog = new JDialog(MainFrame.frame, "Result one", true);
-        dialog.getContentPane().setLayout(new GridLayout());
-        dialog.getContentPane().add(scrollPane);
-
-        dialog.setSize(200, 150);
+        dialog.getContentPane().setLayout(new BorderLayout());
+        dialog.getContentPane().add(vBox, BorderLayout.CENTER);
+        dialog.setBounds(300, 300, 200, 150);
 
         JButton ok = new JButton("OK");
         ok.addActionListener(e -> {
             dialog.setVisible(false);
         });
-        dialog.getContentPane().add(ok);
+
+        JPanel panel = new JPanel();
+
+        vBox.add(panel, BorderLayout.SOUTH);
+        panel.add(ok);
         dialog.setVisible(true);
     }
 

@@ -14,8 +14,7 @@ public class Builder implements Comparable<Builder> {
         this.readiness = readiness;
     }
 
-    public Builder() {
-    }
+    public Builder() { }
 
     public int getBuilderId() {
         return id;
@@ -67,17 +66,8 @@ public class Builder implements Comparable<Builder> {
 
     @Override
     public int compareTo(Builder build) {
-        //сравниваютс¤ только пол¤, составл¤ющие ключ!
-        //по возрастанию названи¤ команды,
-        //в рамках одной команды -
-        //по возрастанию названи¤ чемпионата
-        // сначала сравниваем названи¤ команд
         if (id < build.id) return -1;
         if (id > build.id) return 1;
-        //названи¤ команд равны (одна и та же команда)
-        //сравниваем названи¤ чемпионатов
         return Integer.compare(readiness, build.readiness);
-        //названи¤ чемпионатов равны   (этого не будет, т.к. ключи
-        // разных строк Ѕƒ не могут быть равны друг другу)
     }
 }
