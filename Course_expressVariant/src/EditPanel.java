@@ -85,19 +85,19 @@ public class EditPanel extends JPanel {
         date = tfDate.getText();
         readinessStr = tfReadiness.getText();
         if (idStr.equals("") || objName.equals("") || date.equals("") || readinessStr.equals("")) {
-            MainFrame.MSG.setText("Задайте значения полей");
+            MainFrame.MSG.setText("Set field values");
             return;
         }
         try {
             id = Integer.parseInt(idStr);
             readiness = Integer.parseInt(readinessStr);
         } catch (NumberFormatException e) {
-            MainFrame.MSG.setText("   Задайте правильно число голов");
+            MainFrame.MSG.setText("   Set the readiness percentage correctly");
             return;
         }
-        MainFrame.MSG.setText("   Запрос на обновление записи в таблице");
+        MainFrame.MSG.setText("   Table Record Update Request");
         if (!Global.table.UpdBuilderReadiness(new Builder(id, objName, "", 0), date, readiness))
-            MainFrame.MSG.setText("   Запись не обновлена, возможно записи с таким ключом нет");
+            MainFrame.MSG.setText("   Record not updated, there may be no record with this key");
         Global.updateJTable(Global.table.getBuilders());
         tfId.setText("");
         tfObjName.setText("");
@@ -110,19 +110,19 @@ public class EditPanel extends JPanel {
         var idStr = tfId.getText();
         var objName = tfObjName.getText();
         if (idStr.equals("") || objName.equals("")) {
-            MainFrame.MSG.setText("Задайте значения полей ключа");
+            MainFrame.MSG.setText("Set field values");
             return;
         }
         try {
             id = Integer.parseInt(idStr);
         } catch (NumberFormatException e) {
-            MainFrame.MSG.setText("   Задайте правильно число голов");
+            MainFrame.MSG.setText("   Set the readiness percentage correctly");
             return;
         }
-        MainFrame.MSG.setText("   Запрос на удаление записи по ключу");
+        MainFrame.MSG.setText("   Request to delete key entry");
 
         if (!Global.table.DelBuilder(new Builder(id, objName, "", 0)))
-            MainFrame.MSG.setText("   Запись не удалена, возможно записи с таким ключом нет");
+            MainFrame.MSG.setText("   Record not deleted, possibly no record with this key");
 
         Global.updateJTable(Global.table.getBuilders());
         tfId.setText("");
@@ -134,7 +134,7 @@ public class EditPanel extends JPanel {
     private void deleteGroup() {
         if (!Global.table.DelInpReadiness(tfInpReadiness.getText()))
             MainFrame.MSG.setText(
-                    "   Записи не удалены, возможно таких записей нет");
+                    "   Records not deleted, there may be no such records");
         Global.updateJTable(Global.table.getBuilders());
         tfId.setText("");
         tfObjName.setText("");

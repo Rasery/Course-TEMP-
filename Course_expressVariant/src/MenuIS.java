@@ -1,12 +1,7 @@
-import java.io.*;
-import java.awt.*;
 import javax.swing.*;
-import java.awt.event.*;
-import javax.swing.event.*;
 
 public class MenuIS {
-    //Главное меню
-//подпункты меню
+
     JMenuItem newFile;
     JMenuItem openFile;
     JMenuItem saveFile;
@@ -17,49 +12,49 @@ public class MenuIS {
     JMenuItem help1;
     JMenuItem help2;
 
-    JMenu m1, m2, m3;//пункты меню
-    JMenuBar mb1;//панель меню
+    JMenu menuFile, menuEdit, menuReference;
+    JMenuBar menuBar;
 
 
     public MenuIS() {
 
-        m1 = new JMenu("File");
+        menuFile = new JMenu("File");
 
         newFile = new JMenuItem("New");
-        m1.add(newFile);
+        menuFile.add(newFile);
 
         openFile = new JMenuItem("Open");
-        m1.add(openFile);
+        menuFile.add(openFile);
 
         saveFile = new JMenuItem("Save");
-        m1.add(saveFile);
+        menuFile.add(saveFile);
 
         saveAsFile = new JMenuItem("Save as");
-        m1.add(saveAsFile);
+        menuFile.add(saveAsFile);
 
         closeFile = new JMenuItem("Close");
-        m1.add(closeFile);
+        menuFile.add(closeFile);
 
-        m2 = new JMenu("Edit");
+        menuEdit = new JMenu("Edit");
 
         startEdit = new JMenuItem("Start edit");
-        m2.add(startEdit);
+        menuEdit.add(startEdit);
 
         stopEdit = new JMenuItem("Stop edit");
-        m2.add(stopEdit);
+        menuEdit.add(stopEdit);
 
-        m3 = new JMenu("Reference");
+        menuReference = new JMenu("Reference");
 
         help1 = new JMenuItem("About");
-        m3.add(help1);
+        menuReference.add(help1);
 
         help2 = new JMenuItem("IS description");
-        m3.add(help2);
+        menuReference.add(help2);
 
-        mb1 = new JMenuBar();
+        menuBar = new JMenuBar();
 
-        mb1.add(m1);
-        mb1.add(m2);
-        mb1.add(m3);
+        menuBar.add(menuFile);
+        menuBar.add(menuEdit);
+        menuBar.add(menuReference);
     }
 }
