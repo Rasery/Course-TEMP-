@@ -25,7 +25,7 @@ public class MainFrame implements ActionListener {
 
     public MainFrame() {
 
-        Global.table = new BuilderGroup("Список записей о результатах");
+        Global.table = new BuilderGroup("List of Building Records");
         Global.builders = new ArrayList<>();
         Global.tableModel = new BuilderTableModel(Global.builders);
         VIS_TABLE = new JTable(Global.tableModel);
