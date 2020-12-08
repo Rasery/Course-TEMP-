@@ -1,165 +1,145 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class EditPanel extends JPanel {
 
-    JTextField tf1;
-    JTextField tf2;
-    JTextField tf3;
-    JTextField tf4;
-    JTextField tf5;
+    JTextField tfId;
+    JTextField tfObjName;
+    JTextField tfDate;
+    JTextField tfReadiness;
+    JTextField tfInpReadiness;
 
     public EditPanel() {
+
         setLayout(new GridLayout(3, 3, 2, 2));
-        JButton but1 = new JButton("Add");
-        JButton but2 = new JButton("Update");
-        JButton but3 = new JButton("Delete");
-        JButton but4 = new JButton("Delete group:");
-        tf1 = new JTextField("");
-        tf2 = new JTextField("");
-        tf3 = new JTextField("");
-        tf4 = new JTextField("");
-        tf5 = new JTextField("", 10);
-        JLabel l1 = new JLabel("");
-        JLabel l2 = new JLabel("  readiness less than ");
-        JPanel p1 = new JPanel();
-        add(tf1);
-        add(tf2);
-        add(tf3);
-        add(tf4);
-        add(but1);
-        add(but2);
-        add(l1);
-        add(but3);
-        add(but4);
-        add(p1);
-        p1.add(l2);
-        p1.add(tf5);
-        but1.addActionListener(new ActionListener() { //анонимный слушатель
-                                   public void actionPerformed(ActionEvent e) {
-                                       insert();
-                                   }
-                               }
-        );
-        but2.addActionListener(new ActionListener() { //анонимный слушатель
-                                   public void actionPerformed(ActionEvent e) {
-                                       update();
-                                   }
-                               }
-        );
-        but3.addActionListener(new ActionListener() { //анонимный слушатель
-                                   public void actionPerformed(ActionEvent e) {
-                                       delete();
-                                   }
-                               }
-        );
-        but4.addActionListener(new ActionListener() { //анонимный слушатель
-                                   public void actionPerformed(ActionEvent e) {
-                                       deleteGroup();
-                                   }
-                               }
-        );
+        JButton butAdd = new JButton("Add");
+        JButton butUpd = new JButton("Update");
+        JButton butDel = new JButton("Delete");
+        JButton butDelGr = new JButton("Delete group:");
+        tfId = new JTextField("");
+        tfObjName = new JTextField("");
+        tfDate = new JTextField("");
+        tfReadiness = new JTextField("");
+        tfInpReadiness = new JTextField("", 10);
+        JLabel labelEmpty = new JLabel("");
+        JLabel labelLess = new JLabel("  readiness less than ");
+        JPanel panel = new JPanel();
+
+        add(tfId);
+        add(tfObjName);
+        add(tfDate);
+        add(tfReadiness);
+        add(butAdd);
+        add(butUpd);
+        add(labelEmpty);
+        add(butDel);
+        add(butDelGr);
+        add(panel);
+        panel.add(labelLess);
+        panel.add(tfInpReadiness);
+
+        butAdd.addActionListener(e -> insert());
+        butUpd.addActionListener(e -> update());
+        butDel.addActionListener(e -> delete());
+        butDelGr.addActionListener(e -> deleteGroup());
     }
 
     private void insert() {
-        int n1;
-        int n4;
-//        String str1; String str2, String str3, String str4;
-        var str1 = tf1.getText();
-        var str2 = tf2.getText();
-        var str3 = tf3.getText();
-        var str4 = tf4.getText();
-        if (str1.equals("") || str2.equals("") || str3.equals("") || str4.equals("")) {
-            MainFrame.MSG.setText("Задайте значения полей");
+
+        int id, readiness;
+        var idStr = tfId.getText();
+        var objName = tfObjName.getText();
+        var date = tfDate.getText();
+        var readinessStr = tfReadiness.getText();
+
+        if (idStr.equals("") || objName.equals("") || date.equals("") || readinessStr.equals("")) {
+            MainFrame.MSG.setText("Set field values");
             return;
         }
+
         try {
-            n1 = Integer.parseInt(str1);
-            n4 = Integer.parseInt(str4);
-        }//try
+            id = Integer.parseInt(idStr);
+            readiness = Integer.parseInt(readinessStr);
+        }
         catch (NumberFormatException e) {
-            MainFrame.MSG.setText("   Задайте правильно число голов");
+            MainFrame.MSG.setText("   Set the readiness percentage correctly");
             return;
         }
-        MainFrame.MSG.setText(
-                "   Запрос на добавление записи в таблицу");
-        if (!Global.table.AddBuilder(new Builder(n1, str2, str3, n4)))
-            MainFrame.MSG.setText(
-                    "   Запись не добавлена, возможно нарушена уникальность ключа");
+
+        MainFrame.MSG.setText("   Request to add an entry to the table");
+        if (!Global.table.AddBuilder(new Builder(id, objName, date, readiness)))
+            MainFrame.MSG.setText("   Entry not added, possibly key uniqueness violated");
         Global.updateJTable(Global.table.getBuilders());
-        tf1.setText("");
-        tf2.setText("");
-        tf3.setText("");
-        tf4.setText("");
+        tfId.setText("");
+        tfObjName.setText("");
+        tfDate.setText("");
+        tfReadiness.setText("");
     }
 
     private void update() {
-        int n1, n4;
-        String str1, str2, str3, str4;
-        str1 = tf1.getText();
-        str2 = tf2.getText();
-        str3 = tf3.getText();
-        str4 = tf4.getText();
-        if (str1.equals("") || str2.equals("") || str3.equals("") || str4.equals("")) {
-            MainFrame.MSG.setText("Задайте значения полей");
+        int id, readiness;
+        String idStr, objName, date, readinessStr;
+        idStr = tfId.getText();
+        objName = tfObjName.getText();
+        date = tfDate.getText();
+        readinessStr = tfReadiness.getText();
+        if (idStr.equals("") || objName.equals("") || date.equals("") || readinessStr.equals("")) {
+            MainFrame.MSG.setText("Set field values");
             return;
         }
         try {
-            n1 = Integer.parseInt(str1);
-            n4 = Integer.parseInt(str4);
-        } catch (NumberFormatException e) {// обработчик исключения для try
-            MainFrame.MSG.setText("   Задайте правильно число голов");
+            id = Integer.parseInt(idStr);
+            readiness = Integer.parseInt(readinessStr);
+        } catch (NumberFormatException e) {
+            MainFrame.MSG.setText("   Set the readiness percentage correctly");
             return;
         }
-        MainFrame.MSG.setText("   Запрос на обновление записи в таблице");
-        if (!Global.table.UpdBuilderReadiness(new Builder(n1, str2, str3, n4)))
-            MainFrame.MSG.setText("   Запись не обновлена, возможно записи с таким ключом нет");
+        MainFrame.MSG.setText("   Table Record Update Request");
+        if (!Global.table.UpdBuilderReadiness(new Builder(id, objName, "", 0), date, readiness))
+            MainFrame.MSG.setText("   Record not updated, there may be no record with this key");
         Global.updateJTable(Global.table.getBuilders());
-        tf1.setText("");
-        tf2.setText("");
-        tf3.setText("");
-        tf4.setText("");
+        tfId.setText("");
+        tfObjName.setText("");
+        tfDate.setText("");
+        tfReadiness.setText("");
     }
 
     private void delete() {
-        int n1, n4;
-//        String str1, str2;
-        var str1 = tf1.getText();
-        var str2 = tf2.getText();
-        if (str1.equals("") || str2.equals("")) {
-            MainFrame.MSG.setText("Задайте значения полей ключа");
+        int id;
+        var idStr = tfId.getText();
+        var objName = tfObjName.getText();
+        if (idStr.equals("") || objName.equals("")) {
+            MainFrame.MSG.setText("Set field values");
             return;
         }
         try {
-            n1 = Integer.parseInt(str1);
+            id = Integer.parseInt(idStr);
         } catch (NumberFormatException e) {
-            MainFrame.MSG.setText("   Задайте правильно число голов");
+            MainFrame.MSG.setText("   Set the readiness percentage correctly");
             return;
         }
-        MainFrame.MSG.setText("   Запрос на удаление записи по ключу");
+        MainFrame.MSG.setText("   Request to delete key entry");
 
-        if (!Global.table.DelBuilder(new Builder(n1, str2, "", 0)))
-            MainFrame.MSG.setText("   Запись не удалена, возможно записи с таким ключом нет");
+        if (!Global.table.DelBuilder(new Builder(id, objName, "", 0)))
+            MainFrame.MSG.setText("   Record not deleted, possibly no record with this key");
 
         Global.updateJTable(Global.table.getBuilders());
-        tf1.setText("");
-        tf2.setText("");
-        tf3.setText("");
-        tf4.setText("");
+        tfId.setText("");
+        tfObjName.setText("");
+        tfDate.setText("");
+        tfReadiness.setText("");
     }
 
     private void deleteGroup() {
-        if (!Global.table.DelInpReadiness(tf5.getText()))
+        if (!Global.table.DelInpReadiness(tfInpReadiness.getText()))
             MainFrame.MSG.setText(
-                    "   Записи не удалены, возможно таких записей нет");
+                    "   Records not deleted, there may be no such records");
         Global.updateJTable(Global.table.getBuilders());
-        tf1.setText("");
-        tf2.setText("");
-        tf3.setText("");
-        tf4.setText("");
-        tf5.setText("");
+        tfId.setText("");
+        tfObjName.setText("");
+        tfDate.setText("");
+        tfReadiness.setText("");
+        tfInpReadiness.setText("");
     }
 } 

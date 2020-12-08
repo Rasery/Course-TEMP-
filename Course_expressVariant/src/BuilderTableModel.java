@@ -2,7 +2,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.*;
 
 public class BuilderTableModel extends AbstractTableModel {
-    //Модель для основной таблицы
+
     List<Builder> builders;
 
     public BuilderTableModel(List<Builder> builders) {
@@ -22,37 +22,23 @@ public class BuilderTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int r, int c) {
-        switch (c) {
-            case 0:
-                return builders.get(r).getBuilderId();
-            case 1:
-                return builders.get(r).getObjectName();
-            case 2:
-                return builders.get(r).getDate();
-            case 3:
-                return builders.get(r).getReadiness();
-            default:
-                return "";
-        }
+        return switch (c) {
+            case 0 -> builders.get(r).getBuilderId();
+            case 1 -> builders.get(r).getObjectName();
+            case 2 -> builders.get(r).getDate();
+            case 3 -> builders.get(r).getReadiness();
+            default -> "";
+        };
     }
 
     @Override
     public String getColumnName(int c) {
-        String name = "";
-        switch (c) {
-            case 0:
-                name = "ID";
-                break;
-            case 1:
-                name = "Object name";
-                break;
-            case 2:
-                name = "Date";
-                break;
-            case 3:
-                name = "Readiness";
-                break;
-        }
-        return name;
+        return switch (c) {
+            case 0 -> "ID";
+            case 1 -> "Object name";
+            case 2 -> "Date";
+            case 3 -> "Readiness";
+            default -> "";
+        };
     }
 }
