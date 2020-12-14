@@ -38,29 +38,17 @@ public class EditPanel extends JPanel {
         add(p1);
         p1.add(l2);
         p1.add(tf5);
-        but1.addActionListener(new ActionListener() { //анонимный слушатель
-                                   public void actionPerformed(ActionEvent e) {
-                                       insert();
-                                   }
-                               }
+        //анонимный слушатель
+        but1.addActionListener(e -> insert()
         );
-        but2.addActionListener(new ActionListener() { //анонимный слушатель
-                                   public void actionPerformed(ActionEvent e) {
-                                       update();
-                                   }
-                               }
+        //анонимный слушатель
+        but2.addActionListener(e -> update()
         );
-        but3.addActionListener(new ActionListener() { //анонимный слушатель
-                                   public void actionPerformed(ActionEvent e) {
-                                       delete();
-                                   }
-                               }
+        //анонимный слушатель
+        but3.addActionListener(e -> delete()
         );
-        but4.addActionListener(new ActionListener() { //анонимный слушатель
-                                   public void actionPerformed(ActionEvent e) {
-                                       deleteGroup();
-                                   }
-                               }
+        //анонимный слушатель
+        but4.addActionListener(e -> deleteGroup()
         );
     }
 
